@@ -20,15 +20,25 @@
     <div class="row">
         <div class="column column-60 column-offset-20">
         <?php $imges = array("image/png", "image/jpg", "image/jpeg");
-        if(isset($_FILES['photo'])){
-            if(in_array($_FILES['photo']['type'],$imges)!==false){
-                move_uploaded_file($_FILES['photo']['tmp_name'],"./imgs/myimagases.png");
-            }
-        }    
+        
+             if(isset($_FILES['photo'])){
+                $someImages = count($_FILES["photo"]["name"]);
+                for($i=0;$i<$someImages;$i++){
+                if(in_array($_FILES["photo"]["type"][$i],$imges)!==false){
+                    echo move_uploaded_file($_FILES['photo']['tmp_name'][$i], "imgs/" . $_FILES["photo"]["name"][$i]);
+                 }
+                }
+            }  
+            
+
+            print_r ($_FILES);
+          
     ?>
             <form action="file_upload.php" method="post" enctype="multipart/form-data">
                 <label for="photo">Upload a photo here</label>
-                <input type="file" name="photo" id="photo">
+                <input type="file" name="photo[]" id="photo">
+                <input type="file" name="photo[]" id="photo">
+                <input type="file" name="photo[]" id="photo">
                 <input type="submit" value="send">
             </form>
         </div>
